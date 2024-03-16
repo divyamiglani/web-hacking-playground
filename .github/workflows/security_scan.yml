@@ -40,14 +40,6 @@ jobs:
             # Add a comment to the pull request
             # Merge the pull request
           fi
-
-      - name: Upload SBOM and Dependency Scan Reports
-        uses: actions/upload-artifact@v2
-        with:
-           name: scan-reports
-           path: |
-            bom.xml
-            dependency-check-report
       
           
     
