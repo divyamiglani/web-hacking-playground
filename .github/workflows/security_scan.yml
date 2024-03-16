@@ -41,8 +41,8 @@ jobs:
             # Merge the pull request
           fi
           
-      - name: Generate SBOM
-        uses: CycloneDX/bom-action@v1
+      - name: Run CycloneDX BOM Action
+        uses: owner/repo@v1
         with:
           output: "bom.xml"
           
