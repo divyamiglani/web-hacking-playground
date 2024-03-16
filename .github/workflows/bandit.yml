@@ -1,13 +1,11 @@
-name: Bandit Scan
+name: Code Scan
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
-  security_scan:
+  code_scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -22,6 +20,14 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit
+        id: bandit
         run: bandit -r .
 
-      # Add more steps as needed to handle the results
+      - name: Check Bandit Results
+        run: |
+          if grep -q "CVSS:3.0/CRITICAL" bandit_results.txt; then
+            echo "::error::Critical or above vulnerabilities found. Blocking the pull request."
+            exit 1
+          else
+            echo "No critical or above vulnerabilities found. Allowing the pull request to proceed."
+          fi
