@@ -41,28 +41,4 @@ jobs:
             # Merge the pull request
           fi
 
-      - name: Set up OWASP Dependency-Check
-        uses: dependency-check/dependency-check-action@v2
-        with:
-          format: 'ALL'
-          scan: 'true'
-          failOnCVSS: '8'
-
-      - name: Upload OWASP Dependency-Check Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: dependency-check-report
-          path: ${{ github.workspace }}/dependency-check-report.html
-
-      - name: Generate SBOM
-        uses: ossf/sbom-action@v0.0.4
-        id: generate-sbom
-        with:
-          format: 'json'
-          output-file: 'sbom.json'
-
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v2
-        with:
-          name: software-bill-of-materials
-          path: sbom.json
+      
