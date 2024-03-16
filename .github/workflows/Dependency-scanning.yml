@@ -1,0 +1,32 @@
+name: Dependency Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  dependency_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step to generate SBOM
+      - name: Generate SBOM
+        uses: cyclonedx/cyclonedx-generate-action@v1
+        with:
+          outputFormat: 'JSON' # Specify the desired format
+          outputFilePath: 'sbom.json' # Specify the output file path
+
+      # Step to perform dependency scanning
+      - name: Dependency Scanning
+        uses: dependency-check/dependency-check-action@v2
+        with:
+          format: 'ALL' # Specify the formats to scan
+          output-format: 'ALL' # Specify the output format
+          outputDirectory: 'dependency_scan_results' # Specify the output directory
+
+      # Add more steps as needed
+
