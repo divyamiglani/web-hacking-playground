@@ -31,15 +31,11 @@ jobs:
 
       - name: Check for Critical Vulnerabilities
         run: |
-          if [ "${{ steps.bandit.outputs.has_critical_vulnerabilities }}" == "true" ]; then
-            echo "Critical vulnerabilities found. Blocking the pull request."
-            # Add a comment to the pull request
-            # Block the pull request
-          else
-            echo "No critical vulnerabilities found. Merging the pull request."
-            # Add a comment to the pull request
-            # Merge the pull request
-          fi
+         if [ "$HAS_CRITICAL_VULNERABILITIES" == "true" ]; then
+          echo "Critical vulnerabilities found. Blocking the pull request."
+         else
+          echo "No critical vulnerabilities found. Merging the pull request."
+         fi
       
           
     
