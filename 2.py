@@ -1,9 +1,21 @@
-import os
+import sqlite3
 
-# This function has a command injection vulnerability
-def run_command(command):
-    os.system(command)
+# Function to fetch user data from the database
+def fetch_user_data(username):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    # Vulnerable SQL query with user-controlled input
+    query = f"SELECT * FROM users WHERE username = '{username}'"
+    
+    cursor.execute(query)
+    user_data = cursor.fetchone()
+    
+    conn.close()
+    
+    return user_data
 
-if __name__ == "__main__":
-    user_input = input("Enter a command to run: ")
-    run_command(user_input)
+# Example usage
+username = input("Enter username: ")
+user_data = fetch_user_data(username)
+print(user_data)
