@@ -40,13 +40,6 @@ jobs:
             # Add a comment to the pull request
             # Merge the pull request
           fi
-    
-      - name: Generate Python SBOM
-        uses: CycloneDX/gh-python-generate-sbom@v2
-        with:
-          input: ./requirements.txt
-          output: ./bom.json
-          format: json
 
       - name: Upload SBOM and Dependency Scan Reports
         uses: actions/upload-artifact@v2
