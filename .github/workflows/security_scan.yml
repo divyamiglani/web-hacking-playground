@@ -28,7 +28,8 @@ jobs:
         run: |
           bandit -r . > bandit_results.txt || true
           echo "::set-output name=has_critical_vulnerabilities::$(grep -q 'Severity: CRITICAL' bandit_results.txt && echo true || echo false)"
-
+          cat bandit_results.txt
+          
       - name: Check for Critical Vulnerabilities
         run: |
          if [ "$HAS_CRITICAL_VULNERABILITIES" == "true" ]; then
@@ -37,7 +38,7 @@ jobs:
           echo "No critical vulnerabilities found. Merging the pull request."
          fi
       
-         cat result.txt 
+        
     
 
 
