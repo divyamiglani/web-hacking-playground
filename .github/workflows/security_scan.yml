@@ -40,5 +40,29 @@ jobs:
             # Add a comment to the pull request
             # Merge the pull request
           fi
+          
+      - name: Generate SBOM
+        uses: CycloneDX/bom-action@v1
+        with:
+          output: "bom.xml"
+          
+      - name: Run Dependency-Check
+        uses: dependency-check/dependency-check-action@v2
+        with:
+          format: 'ALL'
+          scan: 'true'
+          outputDirectory: 'dependency-check-report'
+
+      - name: Upload SBOM and Dependency Scan Reports
+        uses: actions/upload-artifact@v2
+        with:
+           name: scan-reports
+           path: |
+            bom.xml
+            dependency-check-report
+      
+          
+    
+
 
       
