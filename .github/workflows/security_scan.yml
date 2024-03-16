@@ -40,11 +40,14 @@ jobs:
             # Add a comment to the pull request
             # Merge the pull request
           fi
-          
-      - name: Run CycloneDX BOM Action
-        uses: owner/repo@v1
+    
+      - name: Generate Python SBOM
+        uses: CycloneDX/gh-python-generate-sbom@v2
         with:
-          output: "bom.xml"
+          input: ./requirements.txt
+          output: ./bom.json
+          format: json
+
           
       - name: Run Dependency-Check
         uses: dependency-check/dependency-check-action@v2
